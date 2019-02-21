@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
-import HelloWorld from './components/HelloWorld'
 
 class App extends Component {
   render() {
-    return <HelloWorld />
+    return (
+      <>
+        <main>
+          <div style={{ backgroundColor: `hsl(50,8%,20%)` }}>
+            <h1>Colors</h1>
+            <input type="range" min="0" max="240" />
+            <input type="range" />
+            <input type="range" />
+          </div>
+        </main>
+      </>
+    )
   }
 }
 
