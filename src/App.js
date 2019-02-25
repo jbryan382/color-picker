@@ -4,27 +4,27 @@ class App extends Component {
   state = {
     hue: 0,
     saturation: 0,
-    light: 0,
+    light: 50,
     savedHSL: []
   }
 
   updateHue = event => {
     console.log(event)
     this.setState({
-      hue: event.type.value
+      hue: event.target.value
     })
   }
   updateSat = event => {
     console.log(event)
     this.setState({
-      saturation: event.type.value
+      saturation: event.target.value
     })
   }
 
   updateLight = event => {
     console.log(event)
     this.setState({
-      light: event.type.value
+      light: event.target.value
     })
   }
 
@@ -34,21 +34,26 @@ class App extends Component {
       savedSat: this.state.saturation,
       savedLight: this.state.light
     }
-    savedHSL: this.setState.savedHSL.concat(HSL)
+    // Need to add to state the saved HSL values.
+    this.setState({
+      // Update the savedHSL with HSL
+      savedHSL: this.setState.savedHSL + HSL
+      // Not working potential logic loop...
+    })
   }
 
   render() {
     return (
       <>
         <main>
+          <h1>Colors</h1>
           <div
             style={{
               backgroundColor: `hsl(${this.state.hue},${
                 this.state.saturation
-              },${this.state.light})`
+              }%,${this.state.light}%)`
             }}
           >
-            <h1>Colors</h1>
             <input
               type="range"
               max="240"
@@ -65,6 +70,22 @@ class App extends Component {
               onChange={this.updateLight}
               value={this.state.light}
             />
+          </div>
+          <div>
+            <h3>Your Current Selection:</h3>
+            <p>
+              {this.state.hue}, {this.state.saturation}, {this.state.light}
+            </p>
+            <button onClick={this.saveHSL}> Save Selection</button>
+            <ul>
+              {this.state.savedHSL.map(HSL => {
+                return (
+                  <li>
+                    {HSL.savedHue}, {HSL.savedSat}, {HSL.savedLight}{' '}
+                  </li>
+                )
+              })}
+            </ul>
           </div>
         </main>
       </>
