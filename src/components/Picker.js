@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
+import HSLDisplay from './HSLDisplay'
 
 export default function Picker(props) {
-  const [hueValue, setHueValue] = useState(0)
-  const [satValue, setSatValue] = useState(0)
-  const [lightValue, setLightValue] = useState(0)
-  const [randomHSL, saveRandomHSL] = useState(hueValue, satValue, lightValue)
+  const [hueValue, setHueValue] = useState(Math.floor(Math.random() * 360))
+  const [satValue, setSatValue] = useState(Math.floor(Math.random() * 100))
+  const [lightValue, setLightValue] = useState(Math.floor(Math.random() * 100))
+  // const [randomHSL, saveRandomHSL] = useState(hueValue, satValue, lightValue)
 
+  const randomColor = () => {
+    setHueValue(random => Math.floor(Math.random() * 360))
+    setSatValue(random => Math.floor(Math.random() * 100))
+    setLightValue(random => Math.floor(Math.random() * 100))
+  }
   return (
     <>
       <main>
@@ -17,7 +23,7 @@ export default function Picker(props) {
         >
           <input
             type="range"
-            max="240"
+            max="360"
             onChange={e => setHueValue(e.target.value)}
             value={hueValue}
           />
@@ -34,18 +40,8 @@ export default function Picker(props) {
         </div>
         <div>
           <h3>{props.subtitle}</h3>
-          <p>
-            {hueValue}, {satValue}, {lightValue}
-          </p>
-          <button
-            onClick={() =>
-              saveRandomHSL(
-                randomHSL => randomHSL + hueValue + satValue + lightValue
-              )
-            }
-          >
-            Random Color
-          </button>
+          <HSLDisplay hue={hueValue} sat={satValue} light={lightValue} />
+          <button onClick={randomColor}>Random Color</button>
           {/* <button
             onClick={() =>
               saveHSL(prevHSL => prevHSL + hueValue + satValue + lightValue)
